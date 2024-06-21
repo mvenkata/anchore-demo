@@ -37,7 +37,7 @@ pipeline {
                    echo "docker.io/$DOCKER_IMAGE_NAME:latest `pwd`/Dockerfile" > anchore_images
                    cat anchore_images
                 '''
-                anchore name: 'anchore_images'
+                anchore name: 'anchore_images', force: true
             }
         }
         stage('teardown') {
