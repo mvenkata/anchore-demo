@@ -8,11 +8,6 @@ pipeline {
         DOCKER_IMAGE_NAME = "mkrishnavenkat/examplerepo"
     }
     stages {
-	stage('gitclone') {
-	    steps {
-		git 'https://github.com/mvenkata/anchore-demo.git'
-	    }
-	}
         stage('build') {
             steps {
                 sh'''
