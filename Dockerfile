@@ -1,5 +1,5 @@
 FROM debian:latest
 
-EXPOSE 8080
+EXPOSE 22 
 
 CMD ['/bin/echo', 'HELLO WORLD....']
