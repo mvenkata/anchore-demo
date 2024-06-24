@@ -11,22 +11,10 @@ pipeline {
         stage('build') {
             steps {
                 sh'''
-                    #echo "FROM debian:latest" > Dockerfile
-                    #echo "CMD ['/bin/echo', 'HELLO WORLD....']" >> Dockerfile
-                    
-                    #docker images
-                    
-                    #docker rmi mkrishnavenkat/examplerepo
-                    #echo $$DOCKER_CRED_PSW ":" $DOCKER_CRED_USR
                     echo $DOCKER_CRED_PSW | docker login -u $DOCKER_CRED_USR --password-stdin
-                    #docker login -u $DOCKER_CRED_USR --p"
-                  
                     docker build -t "$DOCKER_IMAGE_NAME:latest" .
-                    
                     docker images
-                    
                     docker push "$DOCKER_IMAGE_NAME:latest"
-                    
                 '''
             }
         }
@@ -37,7 +25,15 @@ pipeline {
                    echo "docker.io/$DOCKER_IMAGE_NAME:latest `pwd`/Dockerfile" > anchore_images
                    cat anchore_images
                 '''
+                //bailOnFail: false - instead of failing just move forward with next steps.
                 anchore name: 'anchore_images', forceAnalyze: true
+            }
+        }
+        stage('Test') {
+            steps {
+                sh'''
+                    echo "Testing Phase"
+                '''
             }
         }
         stage('teardown') {
